@@ -20,7 +20,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 
 " Project
-Plug 'amiorin/vim-project'
+" Plug 'amiorin/vim-project'
 
 Plug 'neomake/neomake'
 " Plug 'posva/vim-vue'
@@ -168,7 +168,7 @@ nmap <S-Left> :tabm -1<CR>
 nmap <S-Right> :tabm +1<CR>
 
 " Project
-nmap <Leader><F2> :tabedit ~/.vimprojects<CR>
+" nmap <Leader><F2> :tabedit ~/.vimprojects<CR>
 
 " cycle through menu items with tab/shift+tab
 inoremap <expr> <TAB> pumvisible() ? "\<c-n>" : "\<TAB>"
@@ -305,11 +305,11 @@ let g:NERDTreeShowLineNumbers=1
 let g:NERDTreeWinSize=50
 
 " Project
-let g:project_use_nerdtree = 1
-let g:project_enable_welcome = 1
-set rtp+=~/.vim/bundle/vim-project/
-call project#rc("~/code")
-so ~/.vimprojects
+" let g:project_use_nerdtree = 1
+" let g:project_enable_welcome = 1
+" set rtp+=~/.vim/bundle/vim-project/
+" call project#rc("~/code")
+" so ~/.vimprojects
 
 " NeoMake
 autocmd BufWritePost * Neomake
