@@ -1,0 +1,14 @@
+--recurse
+--languages=PHP
+--exclude=.ebextensions
+--exclude=.git
+--exclude=.idea
+--exclude=.well-known
+--exclude=public
+--exclude="*/_*cache/*"
+--exclude="*/_*logs{0,1}/*"
+--exclude="*/_*data}/*"
+--totals=yes
+--tag-relative=yes
+--PHP-kinds=+cfi
+--regex-php=/^[ \t]*trait[ \t]+([a-z0_9_]+)/\1/t,traits/i

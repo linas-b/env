@@ -1,0 +1,12 @@
+---
+
+- name: "Setup local environment"
+  hosts: localhost
+  vars_files:
+    - vars/vars.yml
+  become: yes
+  become_user: "{{ user }}"
+  environment:
+    PATH: "/opt/node/bin:{{ ansible_env.PATH }}"
+  tasks:
+    - include: tasks/nvim.yml
