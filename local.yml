@@ -9,4 +9,5 @@
   environment:
     PATH: "/opt/node/bin:{{ ansible_env.PATH }}"
   tasks:
+    - include: tasks/fonts.yml
     - include: tasks/nvim.yml
