@@ -1,0 +1,43 @@
+---
+
+- name: "[Fedora] Install dependencies"
+  become_user: root
+  dnf:
+    name:
+      - git
+      - zsh
+      # - util-linux-user
+    state: latest
+  when: ansible_distribution == 'Fedora'
+
+# - debug: var=installation
+
+- name: "Cloning oh-my-zsh"
+  become_user: "{{ user }}"
+  git:
+    repo=https://github.com/ohmyzsh/ohmyzsh
+    dest=~/.oh-my-zsh
+
+- name: "Check if .zshrc file exists"
+  stat:
+    path: "{{ destination }}/.zshrc"
+  register: ohmyzsh_zshrc
+
+- name: "Copy .zshrc if not exist"
+  copy:
+    src=files/config/ohmyzsh/.zshrc
+    dest={{ destination }}
+    owner={{ user }}
+    group={{ user }}
+    mode=0664
+  when: ohmyzsh_zshrc.stat.exists == False
+
+- name: "Get zsh path"
+  command:  which zsh
+  register: ohmyzsh_zsh_path
+
+- name: "Set zsh as default shell"
+  become_user: root
+  user:
+    name: "{{ user }}"
+    shell: "{{ ohmyzsh_zsh_path.stdout }}"

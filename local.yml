@@ -11,3 +11,4 @@
   tasks:
     - include: tasks/fonts.yml
     - include: tasks/nvim.yml
+    - include: tasks/ohmyzsh.yml
