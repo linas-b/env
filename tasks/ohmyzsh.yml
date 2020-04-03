@@ -18,6 +18,18 @@
     repo=https://github.com/ohmyzsh/ohmyzsh
     dest=~/.oh-my-zsh
 
+- name: "Cloning zsh auto suggestions"
+  become_user: "{{ user }}"
+  git:
+    repo=https://github.com/zsh-users/zsh-autosuggestions
+    dest=~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+- name: "Cloning zsh syntax highlighting"
+  become_user: "{{ user }}"
+  git:
+    repo=https://github.com/zsh-users/zsh-syntax-highlighting
+    dest=~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+
 - name: "Check if .zshrc file exists"
   stat:
     path: "{{ destination }}/.zshrc"
@@ -31,6 +43,14 @@
     group={{ user }}
     mode=0664
   when: ohmyzsh_zshrc.stat.exists == False
+
+- name: "Copy theme"
+  copy:
+    src=files/config/ohmyzsh/themes/lino-gnzh.zsh-theme
+    dest={{ destination }}/.oh-my-zsh/custom/themes
+    owner={{ user }}
+    group={{ user }}
+    mode=0664
 
 - name: "Get zsh path"
   command:  which zsh
