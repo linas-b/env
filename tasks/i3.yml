@@ -1,0 +1,17 @@
+---
+
+- name: "[Fedora] Install i3 wm with dependencies"
+  become_user: root
+  dnf:
+    name:
+      - i3
+    state: latest
+  when: ansible_distribution == 'Fedora'
+
+- name: "Copy i3 configs"
+  copy:
+    src=files/config/i3
+    dest={{ destination }}/.config
+    owner={{ user }}
+    group={{ user }}
+    mode=0664
