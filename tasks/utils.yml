@@ -1,0 +1,15 @@
+---
+
+- name: "[Fedora] Install utils"
+  become_user: root
+  dnf:
+    name:
+      - arandr 
+      - terminator 
+      - git-cola 
+      - htop 
+      - mc 
+      - ranger 
+      - shutter 
+    state: latest
+  when: ansible_distribution == 'Fedora'

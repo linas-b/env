@@ -13,3 +13,4 @@
     - include: tasks/nvim.yml
     - include: tasks/ohmyzsh.yml
     - include: tasks/i3.yml
+    - include: tasks/utils.yml
