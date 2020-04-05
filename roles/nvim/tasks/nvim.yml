@@ -17,8 +17,8 @@
 
 - name: "Copy nvim configs"
   copy:
-    src=files/config/nvim/
-    dest={{ destination }}/.config/nvim/
+    src=files/nvim
+    dest={{ destination }}/.config
     owner={{ user }}
     group={{ user }}
     mode=0664

@@ -8,9 +8,8 @@
   become_user: "{{ user }}"
   environment:
     PATH: "/opt/node/bin:{{ ansible_env.PATH }}"
-  tasks:
-    - include: tasks/fonts.yml
-    - include: tasks/nvim.yml
-    - include: tasks/ohmyzsh.yml
-    - include: tasks/i3.yml
-    - include: tasks/utils.yml
+  roles:
+    - i3
+    - nvim
+    - oh-my-zsh
+    - utils

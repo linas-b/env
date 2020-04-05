@@ -4,9 +4,8 @@
   become_user: root
   dnf:
     name:
-      - git
+      - util-linux-user
       - zsh
-      # - util-linux-user
     state: latest
   when: ansible_distribution == 'Fedora'
 
@@ -37,7 +36,7 @@
 
 - name: "Copy .zshrc if not exist"
   copy:
-    src=files/config/ohmyzsh/.zshrc
+    src=files/.zshrc
     dest={{ destination }}
     owner={{ user }}
     group={{ user }}
@@ -46,7 +45,7 @@
 
 - name: "Copy theme"
   copy:
-    src=files/config/ohmyzsh/themes/lino-gnzh.zsh-theme
+    src=files/themes/lino-gnzh.zsh-theme
     dest={{ destination }}/.oh-my-zsh/custom/themes
     owner={{ user }}
     group={{ user }}

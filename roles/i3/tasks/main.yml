@@ -10,7 +10,7 @@
 
 - name: "Copy i3 configs"
   copy:
-    src=files/config/i3
+    src=files/i3
     dest={{ destination }}/.config
     owner={{ user }}
     group={{ user }}
