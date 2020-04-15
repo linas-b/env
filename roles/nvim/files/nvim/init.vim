@@ -47,7 +47,8 @@ Plug 'craigemery/vim-autotag'                                     " Auto regener
 " Plug 'ludovicchabant/vim-gutentags'                               " Another option for ctags auto regen
 Plug 'tpope/vim-commentary'
 Plug 'SirVer/ultisnips'                                           " Snippets
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } " Search plugin
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } " Search plugin
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }               " Search plugin
 Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'                                          " ctags sidebar
 Plug 'vim-php/tagbar-phpctags.vim'                                " php tags for tag bar (requires phpctags in $PATH)

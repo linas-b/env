@@ -5,11 +5,13 @@
   dnf:
     name:
       - arandr 
-      - terminator 
+      - fzf 
       - git-cola 
       - htop 
       - mc 
       - ranger 
       - shutter 
+      - terminator 
+      - the_silver_searcher 
     state: latest
   when: ansible_distribution == 'Fedora'
