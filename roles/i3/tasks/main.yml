@@ -5,8 +5,18 @@
   dnf:
     name:
       - i3
+      - python3-devel.x86_64
+      - lm_sensors
     state: latest
   when: ansible_distribution == 'Fedora'
+
+- name: "Install bumblebee-status bar"
+  pip:
+    name:
+      - bumblebee-status
+      - psutil
+      - netifaces
+    extra_args: --user
 
 - name: "Copy i3 configs"
   copy:
