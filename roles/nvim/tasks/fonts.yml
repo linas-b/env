@@ -18,7 +18,7 @@
 - name: "Copy DejaVu font"
   copy:
     src=files/DejaVu_Sans_Mono_for_Powerline_Nerd_Font_Complete.otf
-    dest={{ destination }}/.local/share/fonts
+    dest={{ destination }}/.local/share/fonts/
     owner={{ user }}
     group={{ user }}
     mode=0664
