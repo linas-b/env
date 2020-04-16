@@ -15,6 +15,12 @@
     state: latest
   when: ansible_distribution == 'Fedora'
 
+- name: "Install pip dependencies"
+  pip:
+    name:
+      - pynvim
+    extra_args: --user
+
 - name: "Copy nvim configs"
   copy:
     src=files/nvim
