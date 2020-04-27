@@ -85,12 +85,13 @@ call plug#end()
 " For nerdtree icons
 set encoding=utf8
 set guifont=DejaVu\ Sans\ Mono\ 11
+" set guifont=Hack\ Regular\ 11
 
 " Show line numbers
 :set number relativenumber
 
 " Center cursor
-:set scrolloff=20
+:set scrolloff=100
 
 " Pretty color
 if (has("termguicolors"))
@@ -168,18 +169,19 @@ nmap <A-S-Left> gT
 nmap <S-Left> :tabm -1<CR>
 nmap <S-Right> :tabm +1<CR>
 
+" Move selected lines up/down
+xnoremap K :move '<-2<CR>gv-gv
+xnoremap J :move '>+1<CR>gv-gv
+
+" Unset Ex mode
+nnoremap Q <nop>
+
 " Project
 " nmap <Leader><F2> :tabedit ~/.vimprojects<CR>
 
 " cycle through menu items with tab/shift+tab
 inoremap <expr> <TAB> pumvisible() ? "\<c-n>" : "\<TAB>"
 inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<TAB>"
-
-" Always center cursor
-:nnoremap j jzz
-:nnoremap k kzz
-:nnoremap <Up> <Up>zz
-:nnoremap <Down> <Down>zz
 
 " Close all buffers exept current
 " noremap <Leader>bd :%bd | NERDTree<CR>
