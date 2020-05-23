@@ -7,10 +7,11 @@
   args:
     warn: no
 
-- name: "[Fedora] Install NeoVim"
+- name: "[Fedora] Install NeoVim & dependencies"
   become_user: root
   dnf:
     name:
+      - ack
       - neovim
     state: latest
   when: ansible_distribution == 'Fedora'
@@ -20,6 +21,18 @@
     name:
       - pynvim
     extra_args: --user
+
+- name: "Make nvim backups"
+  copy:
+    src={{ item.src }}
+    dest={{ item.dest }}
+    owner={{ user }}
+    group={{ user }}
+    mode=0664
+  with_items:
+    - { src: '{{ destination }}/.config/nvim/init.vim', dest: '{{ destination }}/.config/nvim/init_{{ ansible_date_time.epoch }}.vim.bak' }
+    - { src: '{{ destination }}/.config/nvim/.ctags', dest: '{{ destination }}/.config/nvim/.ctags_{{ ansible_date_time.epoch }}.bak' }
+  when: item.src is file
 
 - name: "Copy nvim configs"
   copy:

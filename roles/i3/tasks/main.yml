@@ -18,6 +18,17 @@
       - netifaces
     extra_args: --user
 
+- name: "Make i3 config backups"
+  copy:
+    src={{ item.src }}
+    dest={{ item.dest }}
+    owner={{ user }}
+    group={{ user }}
+    mode=0664
+  with_items:
+    - { src: '{{ destination }}/.config/i3/config', dest: '{{ destination }}/.config/i3/config_{{ ansible_date_time.epoch }}.bak' }
+  when: item.src is file
+
 - name: "Copy i3 configs"
   copy:
     src=files/i3

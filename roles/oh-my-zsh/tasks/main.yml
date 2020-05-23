@@ -29,10 +29,16 @@
     repo=https://github.com/zsh-users/zsh-syntax-highlighting
     dest=~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
-- name: "Check if .zshrc file exists"
-  stat:
-    path: "{{ destination }}/.zshrc"
-  register: ohmyzsh_zshrc
+- name: "Make zsh config backups"
+  copy:
+    src={{ item.src }}
+    dest={{ item.dest }}
+    owner={{ user }}
+    group={{ user }}
+    mode=0664
+  with_items:
+    - { src: '{{ destination }}/.zshrc', dest: '{{ destination }}/.zshrc_{{ ansible_date_time.epoch }}.bak' }
+  when: item.src is file
 
 - name: "Copy .zshrc if not exist"
   copy:
@@ -41,7 +47,6 @@
     owner={{ user }}
     group={{ user }}
     mode=0664
-  when: ohmyzsh_zshrc.stat.exists == False
 
 - name: "Copy theme"
   copy:
