@@ -5,6 +5,8 @@
   dnf:
     name:
       - arandr 
+      - docker
+      - docker-compose
       - fzf 
       - git-cola 
       - htop 
