@@ -6,5 +6,6 @@ pavucontrol
 NVIM:
 For lvht/phpcd.vim do:
 * install php & php-devel
+* install composer
 * sudo dnf install php-pear
 * pecl install msgpack
