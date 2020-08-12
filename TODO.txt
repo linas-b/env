@@ -9,3 +9,6 @@ For lvht/phpcd.vim do:
 * install composer
 - sudo dnf install php-pear
 * sudo dnf install php-msgpack
+
+For vdebug:
+* sudo ifconfig lo:0 10.254.254.254
