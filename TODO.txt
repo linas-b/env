@@ -7,5 +7,5 @@ NVIM:
 For lvht/phpcd.vim do:
 * install php & php-devel
 * install composer
-* sudo dnf install php-pear
-* pecl install msgpack
+- sudo dnf install php-pear
+* sudo dnf install php-msgpack
