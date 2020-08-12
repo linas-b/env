@@ -1,3 +1,10 @@
 Install:
 
 pavucontrol
+
+
+NVIM:
+For lvht/phpcd.vim do:
+* install php & php-devel
+* sudo dnf install php-pear
+* pecl install msgpack
