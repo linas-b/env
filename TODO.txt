@@ -9,6 +9,7 @@ For lvht/phpcd.vim do:
 * install composer
 - sudo dnf install php-pear
 * sudo dnf install php-msgpack
+* get phpctags: https://github.com/vim-php/phpctags
 
 For vdebug:
 * sudo ifconfig lo:0 10.254.254.254
