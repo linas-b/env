@@ -46,7 +46,8 @@ Plug 'jeetsukumaran/vim-buffergator'
 Plug 'craigemery/vim-autotag'                                     " Auto regenerates ctags
 " Plug 'ludovicchabant/vim-gutentags'                               " Another option for ctags auto regen
 Plug 'tpope/vim-commentary'
-Plug 'SirVer/ultisnips'                                           " Snippets
+Plug 'SirVer/ultisnips'                                           " Snippets Engine
+Plug 'honza/vim-snippets'                                         " Snippets
 " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } " Search plugin
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }               " Search plugin
 Plug 'junegunn/fzf.vim'
@@ -55,7 +56,7 @@ Plug 'vim-php/tagbar-phpctags.vim'                                " php tags for
 " Plug 'vim-syntastic/syntastic'                                    " Syntax
 Plug 'w0rp/ale'                                                   " Syntax
 Plug 'easymotion/vim-easymotion'                                  " Motion movement
-Plug 'iamcco/markdown-preview.vim'                                " Markdown (MD) previewer
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }   " Markdown (MD) previewer
 
 " Theme / Interface
 Plug 'vim-airline/vim-airline'
@@ -76,6 +77,9 @@ Plug 'adoy/vim-php-refactoring-toolbox'                           " Useful tools
 " Plug 'roxma/nvim-completion-manager'                            " Super fast auto complete for nvim
 " Plug 'phpactor/phpactor' ,  {'do': 'composer install'}          " For above
 " Plug 'roxma/ncm-phpactor'                                       " For above
+
+Plug 'xolox/vim-misc'                                             " For sessions manager
+Plug 'xolox/vim-session'                                          " Sessions manager
 
 " Try ncm2
 
@@ -169,6 +173,9 @@ nmap <A-S-Left> gT
 nmap <S-Left> :tabm -1<CR>
 nmap <S-Right> :tabm +1<CR>
 
+" Go inside but in new tab
+nmap <C-A-]> <C-w><C-]><C-w><S-t>
+
 " Move selected lines up/down
 xnoremap K :move '<-2<CR>gv-gv
 xnoremap J :move '>+1<CR>gv-gv
@@ -204,6 +211,9 @@ nmap <Leader>tg :TagbarToggle<CR>
 " Format json (python required)
 nmap <Leader>fjo :%!python -m json.tool<CR>
 
+" Format sql (pip install sqlparse required)
+nmap <Leader>fsq :%!sqlformat --reindent --keywords upper --identifiers lower -<CR>
+
 " Ale Syntax
 nmap <F12> <Plug>(ale_fix)
 
@@ -236,11 +246,11 @@ augroup php_namespace
     autocmd FileType php noremap <Leader>pne :call PhpExpandClass()<CR>
 augroup END
 
-augroup code_sniffer
-    autocmd!
-    " Code Sniffer auto fix on save
-    " autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
-augroup END
+" augroup code_sniffer
+    " autocmd!
+    " " Code Sniffer auto fix on save
+    " " autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
+" augroup END
 
 " NERDTree autocmds
 augroup nerdtree
@@ -282,7 +292,104 @@ augroup sort_uses
     autocmd FileType php noremap <Leader>ps :call PhpSortUse()<CR>
 augroup END
 
+augroup conceal
+    autocmd!
+    " Show quotes in json
+    autocmd Filetype json
+      \ let g:indentLine_setConceal = 0 |
+      \ let g:vim_json_syntax_conceal = 0
+augroup END
 
+
+"-------------Commands-------------"
+
+command! CloseHiddenBuffers call s:CloseHiddenBuffers()
+
+function! s:CloseHiddenBuffers()
+  let open_buffers = []
+
+  for i in range(tabpagenr('$'))
+    call extend(open_buffers, tabpagebuflist(i + 1))
+  endfor
+
+  for num in range(1, bufnr("$") + 1)
+    if buflisted(num) && index(open_buffers, num) == -1
+      exec "bdelete ".num
+    endif
+  endfor
+endfunction
+
+command! Test call s:Test()
+
+let s:php_regex_member_line = '^\s*\%(\%(private\|protected\|public\|static\)\s*.*\)\+\$'
+let s:php_regex_func_line   = '^\s*\%(\%(private\|protected\|public\|static\|abstract\)\s*\)*function\_s\+'
+
+function! s:PhpEchoError(message)
+    echohl ErrorMsg
+    echomsg a:message
+    echohl NONE
+endfunction
+
+function! s:PhpInsertMethod(modifiers, name, params, returnType, impl)
+    call search(s:php_regex_func_line, 'beW')
+    call search('{', 'W')
+    echomsg "Debug:" . a:returnType
+    if len(a:returnType) == 0
+      let l:return = ""
+    else
+      let l:return = ": " . a:returnType
+    endif
+    exec "normal! %"
+    exec "normal! o\<CR>" . a:modifiers . " function " . a:name . "(" . join(a:params, ", ") . ")" . l:return . "\<CR>{\<CR>" . a:impl . "}\<Esc>=a{"
+endfunction
+
+function! s:Test()
+    normal! gg
+    let l:properties = []
+    while search(s:php_regex_member_line, 'eW') > 0
+        normal! w"xye
+        normal! B"cye
+        call s:PhpEchoError('Found:' . @x)
+        call add(l:properties, @x)
+        call add(l:types, @c)
+    endwhile
+    for l:property in l:properties
+        echomsg "Debug:Property: " . l:property . " with Type: "
+        let l:camelCaseName = substitute(l:property, '^_\?\(.\)', '\U\1', '')
+        if g:vim_php_refactoring_auto_validate_g == 0
+            call s:PhpEchoError('Create get' . l:camelCaseName . '()')
+            if inputlist(["0. No", "1. Yes"]) == 0
+                continue
+            endif
+        endif
+        if search(s:php_regex_func_line . "get" . l:camelCaseName . '\>', 'n') == 0
+            call s:PhpInsertMethod("public", "get" . l:camelCaseName, [], "", "return $this->" . l:property . ";\n")
+        endif
+    endfor
+endfunction
+
+command! UuidTimeBased call s:UuidTimeBased()
+
+function! s:UuidTimeBased()
+  " let l:new_uuid=system('uuidgen')[:-2]
+  let l:new_uuid=system('uuidgen -t')[:-2]
+  echo l:new_uuid
+  return l:new_uuid
+endfunction
+
+map <Leader>ut :UuidTimeBased<CR>
+
+command! UuidRandomBased call s:UuidRandomBased()
+
+function! s:UuidRandomBased()
+  let l:new_uuid=system('uuidgen')[:-2]
+  return tolower(l:new_uuid)
+endfunction
+
+
+"-------------Macros-------------"
+
+source $HOME/.config/nvim/config/macros.vimrc
 
 "-------------Other plugin configs-------------"
 
@@ -315,7 +422,7 @@ let g:NERDTreeWinSize=50
 " so ~/.vimprojects
 
 " NeoMake
-autocmd BufWritePost * Neomake
+" autocmd BufWritePost * Neomake
 let g:neomake_error_sign   = {'text': '✖', 'texthl': 'NeomakeErrorSign'}
 let g:neomake_warning_sign = {'text': '∆', 'texthl': 'NeomakeWarningSign'}
 let g:neomake_message_sign = {'text': '➤', 'texthl': 'NeomakeMessageSign'}
@@ -337,28 +444,8 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_max_files = 40000
 let g:ctrlp_max_depth = 40
 
-" PHP Xdebug
-if !exists('g:vdebug_options')
-  let g:vdebug_options = {}
-endif
-" let g:vdebug_options = {'ide_key': 'PHP_STORM'}
-" let g:vdebug_options = {'break_on_open': 0}
-" let g:vdebug_options = {'server': '127.0.0.1'}
-" let g:vdebug_options = {'port': '9001'}
-let g:vdebug_options.ide_key = 'PHP_STORM'
-" let g:vdebug_options.break_on_open = 0
-let g:vdebug_options.break_on_open = 1
-let g:vdebug_options.watch_window_style = 'compact'
-" let g:vdebug_options.server = '127.0.0.1'
-" let g:vdebug_options.server = ''
-" let g:vdebug_options.port = 9001
-let g:vdebug_options.port = 9001
-let g:vdebug_options.debug_file = '~/vdebug.log'
-let g:vdebug_options.continuous_mode = 1
-let g:vdebug_options["path_maps"] = {
-    \    "/home/vagrant/api": "/home/linas/projects/effective/er-vagrant/projects/api",
-    \    "/var/www/admin2": "/home/linas/projects/effective/docker/projects/admin2"
-    \}
+" Vdebug config
+source $HOME/.config/nvim/config/vdebug.vimrc
 
 " Auto tags config
 let g:autotagTagsFile="tags"
@@ -380,6 +467,13 @@ let g:autotagTagsFile="tags"
 " let g:gitgutter_async = 0
 
 " Ale Syntax checker
-let g:ale_fixers = {'php': ['phpcbf', 'php_cs_fixer']}
+let g:ale_fixers = {'php': ['php_cs_fixer']}
+" let g:ale_fixers = {'php': ['phpcbf', 'php_cs_fixer']} " Disabled cs fixer 2021-01-20
 " let g:ale_fixers = {'php': ['phpcbf', 'php_cs_fixer', 'phpmd']}
 let g:ale_fix_on_save = 1
+
+" Session manager
+let g:nerdtree_tabs_open_on_new_tab = 0
+let g:session_autoload = 'no'
+let g:session_autosave = 'no'
+
