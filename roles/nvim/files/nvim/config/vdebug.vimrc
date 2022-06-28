@@ -9,3 +9,4 @@ endif
 " TODO: load by project
 source $HOME/.config/nvim/config/vdebug/ebustas_cms.vimrc
 " source $HOME/.config/nvim/config/vdebug/ebustas_sync.vimrc
+" source $HOME/.config/nvim/config/vdebug/ebustas_coms.vimrc

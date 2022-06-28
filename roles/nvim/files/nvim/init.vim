@@ -54,7 +54,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'                                          " ctags sidebar
 Plug 'vim-php/tagbar-phpctags.vim'                                " php tags for tag bar (requires phpctags in $PATH)
 " Plug 'vim-syntastic/syntastic'                                    " Syntax
-Plug 'w0rp/ale'                                                   " Syntax
+Plug 'dense-analysis/ale'                                         " Syntax
 Plug 'easymotion/vim-easymotion'                                  " Motion movement
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }   " Markdown (MD) previewer
 
@@ -71,8 +71,8 @@ Plug 'vim-vdebug/vdebug'
 Plug 'lvht/phpcd.vim', { 'for': 'php', 'do': 'composer install' } " Auto complete (advanced)
 Plug 'arnaud-lb/vim-php-namespace'
 Plug 'stephpy/vim-php-cs-fixer'                                   " Code sniffer
-Plug 'tobyS/vmustache'                                            " For below
-Plug 'tobyS/pdv'                                                  " Php Doc generator
+" Plug 'tobyS/vmustache'                                            " For below
+" Plug 'tobyS/pdv'                                                  " Php Doc generator
 Plug 'adoy/vim-php-refactoring-toolbox'                           " Useful tools for php
 " Plug 'roxma/nvim-completion-manager'                            " Super fast auto complete for nvim
 " Plug 'phpactor/phpactor' ,  {'do': 'composer install'}          " For above
@@ -395,14 +395,17 @@ source $HOME/.config/nvim/config/macros.vimrc
 
 "
 let g:deoplete#sources#padawan#add_parentheses = 1
-let g:deoplete#skip_chars = ['$']
+" let g:deoplete#skip_chars = ['$'] // depprecated
+" call deoplete#custom#option('deoplete#skip_chars', ['$'])
 
-let g:deoplete#sources = {}
-let g:deoplete#sources.php = ['padawan', 'ultisnips', 'tags', 'buffer']
+" let g:deoplete#sources = {} // depprecated
+" let g:deoplete#sources.php = ['padawan', 'ultisnips', 'tags', 'buffer'] // depprecated
+" call deoplete#custom#option("sources", {'php': ['padawan', 'ultisnips', 'tags', 'buffer']})
 
 " for phpcd plugin
-let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {})
-let g:deoplete#ignore_sources.php = ['omni']
+" let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {}) // depprecated
+" let g:deoplete#ignore_sources.php = ['omni'] // depprecated
+" call deoplete#custom#option('ignore_sources', {'php': ['omni']})
 
 let g:deoplete#enable_at_startup = 1
 
@@ -443,6 +446,13 @@ let g:ctrlp_custom_ignore = {
   \ }
 let g:ctrlp_max_files = 40000
 let g:ctrlp_max_depth = 40
+let g:ctrlp_show_hidden=1
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+
+if executable('ag')
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
 
 " Vdebug config
 source $HOME/.config/nvim/config/vdebug.vimrc
@@ -467,7 +477,9 @@ let g:autotagTagsFile="tags"
 " let g:gitgutter_async = 0
 
 " Ale Syntax checker
-let g:ale_fixers = {'php': ['php_cs_fixer']}
+let g:ale_fixers = {'php': []}
+" let g:ale_fixers = {'php': ['php_cs_fixer']} " Disable for laravel pint
+" let g:ale_fixers = {'php': ['phpcbf', 'php_cs_fixer']}
 " let g:ale_fixers = {'php': ['phpcbf', 'php_cs_fixer']} " Disabled cs fixer 2021-01-20
 " let g:ale_fixers = {'php': ['phpcbf', 'php_cs_fixer', 'phpmd']}
 let g:ale_fix_on_save = 1

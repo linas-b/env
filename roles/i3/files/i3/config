@@ -226,5 +226,8 @@ bindsym $mod+shift+Z mode "$keyboard_layout"
 
 # Auto start apps
 exec slack
-exec skypeforlinux
+# exec skypeforlinux
 exec --no-startup-id redshift-gtk -l 54.6892:25.2798
+
+# Printscreen flameshot
+bindsym Print exec flameshot gui
