@@ -217,6 +217,11 @@ nmap <Leader>fsq :%!sqlformat --reindent --keywords upper --identifiers lower -<
 " Ale Syntax
 nmap <F12> <Plug>(ale_fix)
 
+" Ack
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
+
+
 
 
 "-------------Auto-Commands-------------"
