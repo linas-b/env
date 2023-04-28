@@ -43,7 +43,7 @@ Plug 'digitaltoad/vim-pug'
 " Utility
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'jeetsukumaran/vim-buffergator'
-Plug 'craigemery/vim-autotag'                                     " Auto regenerates ctags
+" Plug 'craigemery/vim-autotag'                                     " Auto regenerates ctags  <------ segmentation fault on save
 " Plug 'ludovicchabant/vim-gutentags'                               " Another option for ctags auto regen
 Plug 'tpope/vim-commentary'
 Plug 'SirVer/ultisnips'                                           " Snippets Engine
@@ -80,6 +80,8 @@ Plug 'adoy/vim-php-refactoring-toolbox'                           " Useful tools
 
 Plug 'xolox/vim-misc'                                             " For sessions manager
 Plug 'xolox/vim-session'                                          " Sessions manager
+
+Plug 'github/copilot.vim'                                         " Github copilot
 
 " Try ncm2
 
@@ -212,7 +214,8 @@ nmap <Leader>tg :TagbarToggle<CR>
 nmap <Leader>fjo :%!python -m json.tool<CR>
 
 " Format sql (pip install sqlparse required)
-nmap <Leader>fsq :%!sqlformat --reindent --keywords upper --identifiers lower -<CR>
+" nmap <Leader>fsq :%!sqlformat --reindent --keywords upper --identifiers lower -<CR>
+nmap <Leader>fsq :%!sqlformat --reindent --keywords upper -<CR>
 
 " Ale Syntax
 nmap <F12> <Plug>(ale_fix)
@@ -449,13 +452,13 @@ let g:ctrlp_custom_ignore = {
   \ 'dir':  '\.git$\|\.idea$\|\.yardoc\|node_modules\|log\|tmp$',
   \ 'file': '\.so$\|\.dat$|\.DS_Store$'
   \ }
-let g:ctrlp_max_files = 40000
-let g:ctrlp_max_depth = 40
-let g:ctrlp_show_hidden=1
+let g:ctrlp_max_files = 60000
+let g:ctrlp_max_depth = 50
+let g:ctrlp_show_hidden = 1
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 
 if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g "" -u --unrestricted'
 endif
 
 
