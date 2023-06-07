@@ -5,6 +5,9 @@
 
 Plug 'neomake/neomake'
 
+" Search
+" Plug 'mileszs/ack.vim'                                            " TODO: replace with fzf
+
 " Utility
 Plug 'dense-analysis/ale'                                         " Syntax
 Plug 'SirVer/ultisnips'                                           " Snippets Engine
@@ -43,6 +46,8 @@ Plug 'digitaltoad/vim-pug'
 " Plug 'padawan-php/deoplete-padawan', { 'for': 'php' }             " Auto complete (simple)
 
 " PHP Utils
+Plug 'ctrlpvim/ctrlp.vim'                                         " TODO: replace with fzf
+Plug 'jeetsukumaran/vim-buffergator'                              " TODO: replace with fzf
 " Plug 'lvht/phpcd.vim', { 'for': 'php', 'do': 'composer install' } " Auto complete (advanced)
 " Plug 'tobyS/vmustache'                                            " For below
 " Plug 'tobyS/pdv'                                                  " Php Doc generator
@@ -57,7 +62,9 @@ Plug 'adoy/vim-php-refactoring-toolbox'                           " Useful tools
 
 
 
-
+" " Ack
+" cnoreabbrev Ack Ack!
+" nnoremap <Leader>a :Ack!<Space>
 
 
 " Ale Syntax
@@ -136,3 +143,17 @@ let g:neomake_info_sign    = {'text': 'ℹ', 'texthl': 'NeomakeInfoSign'}
 
 "" Nerd tree
 let g:nerdtree_tabs_open_on_console_startup=1
+
+-" CtrlP settings
+-let g:ctrlp_custom_ignore = {
+-  \ 'dir':  '\.git$\|\.idea$\|\.yardoc\|node_modules\|log\|tmp$',
+-  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
+-  \ }
+-let g:ctrlp_max_files = 60000
+-let g:ctrlp_max_depth = 50
+-let g:ctrlp_show_hidden = 1
+-let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+-
+-if executable('ag')
+-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g "" -u --unrestricted'
+-endif

@@ -7,9 +7,6 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
 
-" Search
-Plug 'mileszs/ack.vim'                                            " TODO: replace with fzf
-
 " Change suroundings
 Plug 'tpope/vim-surround'
 
@@ -22,10 +19,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 " Utility
-Plug 'ctrlpvim/ctrlp.vim'                                         " TODO: replace with fzf
-Plug 'jeetsukumaran/vim-buffergator'                              " TODO: replace with fzf
 Plug 'tpope/vim-commentary'                                       " gcc to comment line
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }               " Search plugin for EVERYTHING!!! TODO: replace ctrlp, buffergator and ack with this
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }               " Search plugin for EVERYTHING!!!
 Plug 'junegunn/fzf.vim'
 Plug 'easymotion/vim-easymotion'                                  " Motion movement
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }   " Markdown (MD) previewer
@@ -160,19 +155,17 @@ nmap <Leader>fjo :%!python -m json.tool<CR>
 " nmap <Leader>fsq :%!sqlformat --reindent --keywords upper --identifiers lower -<CR>
 nmap <Leader>fsq :%!sqlformat --reindent --keywords upper -<CR>
 
-" Ack
-cnoreabbrev Ack Ack!
-nnoremap <Leader>a :Ack!<Space>
-
 " Copy file path
 nnoremap <leader>cf :let @+=expand("%").':'.line(".")<CR>
 
-" COC Mappings:
-
-" gd to go to definition (coc)
+" COC mappings:
 nmap <silent> gd <Plug>(coc-definition)
-" gr to go to reference
 nmap <silent> gr <Plug>(coc-references)
+
+" FZF mappings:
+nmap <C-f> :Files<CR>
+nmap <C-b> :Buffers<CR>
+nmap <C-a> :Ag<Space>
 
 
 "-------------Auto-Commands-------------"
@@ -303,20 +296,6 @@ colorscheme earthsong
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#show_splits = 0                    " hide buffers???
-
-" CtrlP settings
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\.git$\|\.idea$\|\.yardoc\|node_modules\|log\|tmp$',
-  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
-  \ }
-let g:ctrlp_max_files = 60000
-let g:ctrlp_max_depth = 50
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
-
-if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g "" -u --unrestricted'
-endif
 
 " Vdebug config
 source $HOME/.config/nvim/config/vdebug.vimrc
