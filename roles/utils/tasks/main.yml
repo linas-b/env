@@ -15,5 +15,6 @@
       - shutter 
       - terminator 
       - the_silver_searcher 
+      - bat
     state: latest
   when: ansible_distribution == 'Fedora'
