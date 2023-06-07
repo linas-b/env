@@ -1,0 +1,138 @@
+
+
+" Tree
+" Plug 'jistr/vim-nerdtree-tabs'
+
+Plug 'neomake/neomake'
+
+" Utility
+Plug 'dense-analysis/ale'                                         " Syntax
+Plug 'SirVer/ultisnips'                                           " Snippets Engine
+Plug 'honza/vim-snippets'                                         " Snippets
+Plug 'majutsushi/tagbar'                                          " ctags sidebar
+Plug 'vim-php/tagbar-phpctags.vim'                                " php tags for tag bar (requires phpctags in $PATH)
+
+" Quick fix list movement mapping
+" Plug 'tpope/vim-unimpaired'
+
+
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+" Plug 'brooth/far.vim'                                           " Search and replace
+
+" Project
+" Plug 'amiorin/vim-project'
+
+" Plug 'posva/vim-vue'
+
+" Typescript
+Plug 'leafgarland/typescript-vim'
+
+Plug 'pangloss/vim-javascript'
+Plug 'othree/html5.vim'
+Plug 'digitaltoad/vim-pug'
+
+
+" Plug 'craigemery/vim-autotag'                                     " Auto regenerates ctags  <------ segmentation fault on save
+" Plug 'ludovicchabant/vim-gutentags'                               " Another option for ctags auto regen
+
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' } " Search plugin
+
+" Plug 'vim-syntastic/syntastic'                                    " Syntax
+
+" Plug 'padawan-php/deoplete-padawan', { 'for': 'php' }             " Auto complete (simple)
+
+" PHP Utils
+" Plug 'lvht/phpcd.vim', { 'for': 'php', 'do': 'composer install' } " Auto complete (advanced)
+" Plug 'tobyS/vmustache'                                            " For below
+" Plug 'tobyS/pdv'                                                  " Php Doc generator
+Plug 'stephpy/vim-php-cs-fixer'                                   " Code sniffer
+Plug 'adoy/vim-php-refactoring-toolbox'                           " Useful tools for php
+
+" Plug 'roxma/nvim-completion-manager'                            " Super fast auto complete for nvim
+" Plug 'phpactor/phpactor' ,  {'do': 'composer install'}          " For above
+" Plug 'roxma/ncm-phpactor'                                       " For above
+
+" Try ncm2
+
+
+
+
+
+
+" Ale Syntax
+nmap <F12> <Plug>(ale_fix)
+
+" Ale Syntax checker
+let g:ale_fixers = {'php': []}
+" let g:ale_fixers = {'php': ['php_cs_fixer']} " Disable for laravel pint
+" let g:ale_fixers = {'php': ['phpcbf', 'php_cs_fixer']}
+" let g:ale_fixers = {'php': ['phpcbf', 'php_cs_fixer']} " Disabled cs fixer 2021-01-20
+" let g:ale_fixers = {'php': ['phpcbf', 'php_cs_fixer', 'phpmd']}
+let g:ale_fix_on_save = 1
+
+
+" let g:deoplete#sources#padawan#add_parentheses = 1
+" let g:deoplete#skip_chars = ['$'] // depprecated
+" call deoplete#custom#option('deoplete#skip_chars', ['$'])
+
+" let g:deoplete#sources = {} // depprecated
+" let g:deoplete#sources.php = ['padawan', 'ultisnips', 'tags', 'buffer'] // depprecated
+" call deoplete#custom#option("sources", {'php': ['padawan', 'ultisnips', 'tags', 'buffer']})
+
+" for phpcd plugin
+" let g:deoplete#ignore_sources = get(g:, 'deoplete#ignore_sources', {}) // depprecated
+" let g:deoplete#ignore_sources.php = ['omni'] // depprecated
+" call deoplete#custom#option('ignore_sources', {'php': ['omni']})
+
+" let g:deoplete#enable_at_startup = 1 " TEMP
+
+
+
+" Project
+" let g:project_use_nerdtree = 1
+" let g:project_enable_welcome = 1
+" set rtp+=~/.vim/bundle/vim-project/
+" call project#rc("~/code")
+" so ~/.vimprojects
+
+
+" Syntax checker
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+
+" let g:syntastic_always_populate_loc_list = 0
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+
+" let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+" let g:syntastic_php_checkers = ['php', 'phpmd']
+
+" GitGutter fix with php namespace
+" let g:gitgutter_async = 0
+
+
+" Toggle ctags bar
+nmap <Leader>tg :TagbarToggle<CR>
+
+
+" Ulti snips
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-b>"
+" for PHP7
+let g:ultisnips_php_scalar_types = 1
+
+
+" NeoMake
+" autocmd BufWritePost * Neomake
+let g:neomake_error_sign   = {'text': '✖', 'texthl': 'NeomakeErrorSign'}
+let g:neomake_warning_sign = {'text': '∆', 'texthl': 'NeomakeWarningSign'}
+let g:neomake_message_sign = {'text': '➤', 'texthl': 'NeomakeMessageSign'}
+let g:neomake_info_sign    = {'text': 'ℹ', 'texthl': 'NeomakeInfoSign'}
+
+
+"" Nerd tree
+let g:nerdtree_tabs_open_on_console_startup=1
