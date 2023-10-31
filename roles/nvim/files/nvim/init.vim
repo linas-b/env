@@ -22,6 +22,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-commentary'                                       " gcc to comment line
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }               " Search plugin for EVERYTHING!!!
 Plug 'junegunn/fzf.vim'
+Plug 'jesseleite/vim-agriculture'                                 " Ag extension for fzf
 Plug 'easymotion/vim-easymotion'                                  " Motion movement
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }   " Markdown (MD) previewer
 
@@ -36,6 +37,7 @@ Plug 'StanAngeloff/php.vim'
 Plug 'vim-vdebug/vdebug'
 Plug 'arnaud-lb/vim-php-namespace'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}                   " Completion engine
+" Plug 'phpactor/phpactor', {'for': 'php', 'tag': '*', 'do': 'composer install --no-dev -o'} " refactoring and introspection tools
 
 " Session manager
 Plug 'xolox/vim-misc'                                             " For sessions manager
@@ -43,6 +45,8 @@ Plug 'xolox/vim-session'                                          " Sessions man
 
 " Github copilot
 Plug 'github/copilot.vim'                                         " Github copilot
+
+Plug 'stephpy/vim-php-cs-fixer'                                   " PHP CS Fixer
 
 call plug#end()
 " ---------------------------------------------------------------------------------------------------------------------
@@ -163,9 +167,20 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gr <Plug>(coc-references)
 
 " FZF mappings:
-nmap <C-f> :Files<CR>
+nmap <C-p> :Files<CR>
 nmap <C-b> :Buffers<CR>
 nmap <C-a> :Ag<Space>
+nmap <C-m> :Marks<CR>
+
+" Copilot with COC mappings:
+let g:copilot_no_tab_map = v:true
+
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1):
+      \ exists('b:_copilot.suggestions') ? copilot#Accept("\<CR>") :
+      \ "\<Tab>"
+
+inoremap <expr> <S-Tab> coc#pum#visible() ? coc#pum#prev(1) : "\<S-Tab>"
 
 
 "-------------Auto-Commands-------------"
@@ -275,6 +290,10 @@ function! s:UuidRandomBased()
   return tolower(l:new_uuid)
 endfunction
 
+" Add `:OR` command for organize imports of the current buffer
+" command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
+
 
 "-------------Macros-------------"
 
@@ -289,8 +308,12 @@ let g:NERDTreeShowHidden=1
 let g:NERDTreeShowLineNumbers=1
 let g:NERDTreeWinSize=50
 
+" let g:gruvbox_material_background = 'soft'
+" let g:gruvbox_material_better_performance = 1
+
 " Color schema
-colorscheme earthsong
+" colorscheme earthsong
+colorscheme earthsong-custom
 
 " Vim-Airline Configuration
 let g:airline#extensions#tabline#enabled = 1
@@ -308,3 +331,7 @@ let g:nerdtree_tabs_open_on_new_tab = 0
 let g:session_autoload = 'no'
 let g:session_autosave = 'no'
 
+" CS Fixer
+let g:php_cs_fixer_path = 'vendor/bin/php-cs-fixer'
+let g:php_cs_fixer_level = 'all'
+let g:php_cs_fixer_config = '.php_cs.laravel.php'

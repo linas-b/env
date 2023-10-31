@@ -109,3 +109,5 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias n=nvim
+alias discord='cd ~/apps/Discord && ./Discord'
+alias postman='cd ~/apps/Postman && ./Postman'

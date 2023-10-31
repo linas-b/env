@@ -15,6 +15,7 @@ recursive_copy "$HOME/.config/nvim/config/*" "./roles/nvim/files/nvim/config"
 cp ~/.config/nvim/.ctags ./roles/nvim/files/nvim
 cp ~/.config/nvim/init.vim ./roles/nvim/files/nvim
 cp ~/.config/nvim/plugins_archive.txt ./roles/nvim/files/nvim
+cp ~/.config/nvim/coc-settings.json ./roles/nvim/files/nvim
 
 recursive_copy "$HOME/.oh-my-zsh/custom/themes/*" "./roles/oh-my-zsh/files/themes"
 cp ~/.zshrc ./roles/oh-my-zsh/files
