@@ -15,7 +15,7 @@
     name:
       - bumblebee-status
       - psutil
-      - netifaces
+      - netifaces2
     extra_args: --user
 
 - name: "Make i3 config backups"

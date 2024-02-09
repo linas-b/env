@@ -4,8 +4,6 @@
   become_user: root
   command: "dnf copr enable -y agriffis/neovim-nightly"
   when: ansible_distribution == 'Fedora'
-  args:
-    warn: no
 
 - name: "[Fedora] Install NeoVim & dependencies"
   become_user: root
@@ -44,8 +42,6 @@
 
 - name: "Install Plug for Neovim"
   command: "curl -fLo {{ destination }}/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-  args:
-    warn: no
 
 - name: "Install NeoVim Plugins"
   shell: nvim +PlugInstall +UpdateRemotePlugins +qall! --headless

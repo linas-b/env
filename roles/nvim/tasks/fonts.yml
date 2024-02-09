@@ -4,8 +4,6 @@
   become_user: root
   command: "dnf copr enable -y zawertun/hack-fonts"
   when: ansible_distribution == 'Fedora'
-  args:
-    warn: no
 
 - name: "[Fedora] Install fonts"
   become_user: root
