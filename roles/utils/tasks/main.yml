@@ -16,5 +16,6 @@
       - terminator 
       - the_silver_searcher 
       - bat
+      - redshift
     state: latest
   when: ansible_distribution == 'Fedora'
