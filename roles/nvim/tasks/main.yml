@@ -1,4 +1,8 @@
 ---
 
-- include: fonts.yml
-- include: nvim.yml
+- name: "Fonts for nvim"
+  include_tasks: fonts.yml
+
+- name: "nvim"
+  include_tasks: nvim.yml
+
