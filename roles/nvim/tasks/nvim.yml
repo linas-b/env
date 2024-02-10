@@ -9,6 +9,7 @@
   become_user: root
   dnf:
     name:
+      - nodejs
       - ack
       - neovim
     state: latest
