@@ -12,8 +12,9 @@ recursive_copy "$HOME/.config/i3/*" "./roles/i3/files/i3"
 
 recursive_copy "$HOME/.config/nvim/colors/*" "./roles/nvim/files/nvim/colors"
 recursive_copy "$HOME/.config/nvim/config/*" "./roles/nvim/files/nvim/config"
+recursive_copy "$HOME/.config/nvim/lua/*" "./roles/nvim/files/nvim/lua"
 cp ~/.config/nvim/.ctags ./roles/nvim/files/nvim
-cp ~/.config/nvim/init.vim ./roles/nvim/files/nvim
+cp ~/.config/nvim/init* ./roles/nvim/files/nvim
 cp ~/.config/nvim/plugins_archive.txt ./roles/nvim/files/nvim
 cp ~/.config/nvim/coc-settings.json ./roles/nvim/files/nvim
 
