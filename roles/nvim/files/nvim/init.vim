@@ -335,3 +335,5 @@ let g:session_autosave = 'no'
 let g:php_cs_fixer_path = 'vendor/bin/php-cs-fixer'
 let g:php_cs_fixer_level = 'all'
 let g:php_cs_fixer_config = '.php_cs.laravel.php'
+
+let g:coc_global_extensions = ['coc-phpls']
