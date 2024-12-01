@@ -24,7 +24,8 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }               " Search plugi
 Plug 'junegunn/fzf.vim'
 Plug 'jesseleite/vim-agriculture'                                 " Ag extension for fzf
 Plug 'easymotion/vim-easymotion'                                  " Motion movement
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }   " Markdown (MD) previewer
+" Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }   " Markdown (MD) previewer
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']} " Markdown (MD) previewer
 
 " Theme / Interface
 Plug 'vim-airline/vim-airline'
@@ -157,7 +158,9 @@ nmap <Leader>fjo :%!python -m json.tool<CR>
 
 " Format sql (pip install sqlparse required)
 " nmap <Leader>fsq :%!sqlformat --reindent --keywords upper --identifiers lower -<CR>
-nmap <Leader>fsq :%!sqlformat --reindent --keywords upper -<CR>
+" nmap <Leader>fsq :%!sqlformat --reindent --keywords upper -<CR>
+xmap <leader>fsq <Plug>(coc-format-selected)
+nmap <leader>fsq <Plug>(coc-format-selected)
 
 " Copy file path
 nnoremap <leader>cf :let @+=expand("%").':'.line(".")<CR>
@@ -169,7 +172,7 @@ nmap <silent> gr <Plug>(coc-references)
 " FZF mappings:
 nmap <C-p> :Files<CR>
 nmap <C-b> :Buffers<CR>
-nmap <C-a> :Ag<Space>
+nmap <C-a> :AgRaw<Space>
 nmap <C-m> :Marks<CR>
 
 " Copilot with COC mappings:
