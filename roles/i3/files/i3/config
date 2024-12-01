@@ -173,7 +173,7 @@ bar {
         workspace_buttons no
         font pango:Inconsolata 10
         status_command /home/linas/.local/bin/bumblebee-status \
-          -m network_traffic cpu2 memory battery publicip docker_ps weather redshift layout pasink datetime \
+          -m network_traffic cpu2 memory battery publicip docker_ps weather redshift layout pasink pulsein pulseout datetime \
           -p datetime.format="%Y-%m-%d %T" cpu2.layout="cpu2.cpuload cpu2.temp" cpu2.temp_pattern="temp1_input" \
           -t solarized-powerline
 }
