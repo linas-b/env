@@ -1,5 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+# export PATH=$HOME/.local/bin:$HOME/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -109,5 +110,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias n=nvim
+alias z=zellij
 alias discord='cd ~/apps/Discord && ./Discord'
 alias postman='cd ~/apps/Postman && ./Postman'
+export PATH="/home/linas/.config/herd-lite/bin:$PATH"
+export PHP_INI_SCAN_DIR="/home/linas/.config/herd-lite/bin:$PHP_INI_SCAN_DIR"
